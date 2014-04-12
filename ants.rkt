@@ -1,7 +1,7 @@
 #lang racket 
 
 (provide setup update finish-turn print-params print-map 
-	 get-my-ants destination passable? issue-order time-remaining)
+	 get-my-ants destination passable? issue-order time-remaining ants)
 
 ;; convert all input to lowercase
 (read-case-sensitive #f)
@@ -140,8 +140,7 @@
 ;; returns list of Posns representing my ants (ie, owner = MY-ANT)
 (define (get-my-ants)
   (map car
-       (filter (match-lambda [(cons k v) (= v MY-ANT)])
-	       (map cons (hash-keys ants) (hash-values ants)))))
+       (filter (λ(x) (= (cdr x) MY-ANT)) (hash->list ants))))
 
 ;; given direction and current loc, calculate next loc
 ;; (same as ants.destination in ants.py)
